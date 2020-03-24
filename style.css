@@ -1,0 +1,50 @@
+.coffee-machine {
+  border: 3px solid black;
+  margin-top: 100px;
+}
+
+/* добавим фон*/
+.coffee-list {
+  background-image: url("img/background.jpg");
+  background-size: cover; /* растянули фон*/
+  
+}
+
+.coffee-item {
+  background: rgba(0, 0, 0, 0.7);
+  margin: 10px 0; /* чтобы отступили друг от друга: 10-верх и низ, 0-справа и слева*/
+  border-radius: calc(75px / 2); /* скругляем темный фон*/
+  cursor: pointer; /* к классу coffee-item добавили свойство cursor, чтобы при наведении на кнопку появляся курсор-палец*/
+}
+
+/* буквы белыми делаем: обратились к .coffee-item через контекстный селектор span*/
+.coffee-item  span {
+  color: white;
+  margin-left: 25px; /* текст отступил от картинки на 25px*/
+}
+
+/* меняем высоту картинок, фон и скругляем*/
+.coffee-item  img {
+  height: 75px; /* высоту картинок 75px*/
+  background: white; /* меняем фон картинок*/
+  border-radius: 50%; /* скругляем картинки*/
+  margin-left: -15px; /* сдвинули картинки влево на 15px*/
+}
+
+.coffee-item:hover {
+  background: rgba(30, 30, 30, 0.7); /* теперь при наведении курсора на кнопки они высвечиваются*/
+}
+
+.coffee-oper {
+  background: lightgrey; /* красим правую сторону*/
+}
+/* Отрисовываем дисплей*/
+.display {
+  background: lightgreen;
+  border: 3px solid darkgreen;
+  pudding: 10px;
+}
+
+
+
+
