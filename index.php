@@ -15,7 +15,7 @@
     <div class="container">
       <div class="row coffee-machine"> <!--добавили class coffee-machine, чтобы можно обращаться-->
         <div class="col-6 coffee-list"> <!--добавили class coffee-list-->
-          <div class="row flex-column p-3"> <!--добавили flex-column чтобы картинки стали вертикальными - развернули, затем добавили бутстраповский класс p-3-->
+          <div class="row flex-column p-3 h-100 justify-content-around"> <!--добавили flex-column чтобы картинки стали вертикальными - развернули, затем добавили бутстраповский класс p-3  и h-100 высоту на 100% и justify-content-around- распределяем равномерно -->
             <div class="coffee-item col"> <!--добавили col чтобы элементы стали адаптивными и их можно было расположить в ряд-->
               <img src="img/americano.png" alt="">
               <span>Американо - 50 руб. </span>
@@ -46,9 +46,30 @@
                   
                </div>
              </div>
+             <!--добавляем кружку-->
+             <div class="coffee-cup">
+               <img src="img/americano.png" alt="">
+             </div>
            </div>
            <div class="col-6"> <!--здесь будет 3 элемента -->
-             
+             <!--Выбрали элемент из группы ввода в будстрапе, имя пользователя меняем на Баланс, а адрес на html-код рубля &#8381  -->
+             <div class="input-group mb-3">
+               <input type="text" class="form-control" placeholder="Баланс" aria-label="Имя получателя" aria-describedby="basic-addon2">
+               <div class="input-group-append">
+                 <span class="input-group-text" id="basic-addon2">&#8381</span>
+               </div>
+             </div>
+             <!--добавляем купюроприемник-->
+             <div class="atm">
+               <img src="img/bill_acc.png" alt="">
+             </div>
+             <!--добавляем кнопку сдача, используя бутстрап btn-->
+             <!--btn-block- делаем элемент блочным, чтобы занял всю -->
+             <button class="btn btn-primary btn-block mt-2">Сдача</button>
+             <!--добавляем контейнер под сдачу -->
+             <div class="change-box">
+               
+             </div>
            </div> 
          </div>
         </div> 

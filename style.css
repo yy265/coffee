@@ -6,11 +6,12 @@
 /* добавим фон*/
 .coffee-list {
   background-image: url("img/background.jpg");
-  background-size: cover; /* растянули фон*/
+  background-size: cover; /* cover -растянули фон чтобы покрывал все */
   
 }
 
 .coffee-item {
+  max-height: 75px; /* после h-100 ограничиваем макс. высоту картинок 75px*/
   background: rgba(0, 0, 0, 0.7);
   margin: 10px 0; /* чтобы отступили друг от друга: 10-верх и низ, 0-справа и слева*/
   border-radius: calc(75px / 2); /* скругляем темный фон*/
@@ -25,6 +26,7 @@
 
 /* меняем высоту картинок, фон и скругляем*/
 .coffee-item  img {
+  
   height: 75px; /* высоту картинок 75px*/
   background: white; /* меняем фон картинок*/
   border-radius: 50%; /* скругляем картинки*/
@@ -43,8 +45,24 @@
   background: lightgreen;
   border: 3px solid darkgreen;
   pudding: 10px;
+  margin-bottom: 30px; /* делаем внешний отступ снизу*/
 }
 
+.coffee-cup img {
+  /* правим ширину картинки кружки по ширине родительского элемента div coffee-cup, он занимает всю ширину левой половины правой стороны кофемашины*/
+  width: 100%;
+}
 
+.atm img {
+  /* правим ширину картинки купюроприемника по ширине родительского элемента div coffee-cup*/
+  width: 100%;
+}
+
+.change-box {
+  background: gray;
+  border: 3px solid black;
+  height: 100px;
+  margin-top: 15px;
+}
 
 
