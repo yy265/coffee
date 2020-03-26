@@ -16,19 +16,19 @@
       <div class="row coffee-machine"> <!--добавили class coffee-machine, чтобы можно обращаться-->
         <div class="col-6 coffee-list"> <!--добавили class coffee-list-->
           <div class="row flex-column p-3 h-100 justify-content-around"> <!--добавили flex-column чтобы картинки стали вертикальными - развернули, затем добавили бутстраповский класс p-3  и h-100 высоту на 100% и justify-content-around- распределяем равномерно -->
-            <div class="coffee-item col" onclick="buyCoffee('Американо', 50)"> <!--добавили col чтобы элементы стали адаптивными и их можно было расположить в ряд, onclick добавили реакцию на функцию buyCoffee -->
+            <div class="coffee-item col" onclick="buyCoffee('Американо', 50, this)"> <!--добавили col чтобы элементы стали адаптивными и их можно было расположить в ряд, onclick добавили реакцию на функцию buyCoffee, this добавили для передачи самого эдемента по вызову см.cookCoffee-->
               <img src="img/americano.png" alt="">
               <span>Американо - 50 руб. </span>
             </div> 
-            <div class="coffee-item col" onclick="buyCoffee('Капучино', 78)">
+            <div class="coffee-item col" onclick="buyCoffee('Капучино', 78, this)">
               <img src="img/cappuccino.png" alt="">
               <span>Капучино - 78 руб. </span>
             </div>
-            <div class="coffee-item col" onclick="buyCoffee('Эспрессо', 21)">
+            <div class="coffee-item col" onclick="buyCoffee('Эспрессо', 21, this)">
               <img src="img/espresso.png" alt="">
               <span>Эспрессо - 21 руб. </span>
             </div> 
-            <div class="coffee-item col" onclick="buyCoffee('Латтэ', 115)">
+            <div class="coffee-item col" onclick="buyCoffee('Латтэ', 115, this)">
               <img src="img/latte.jpg" alt="">
               <span>Латтэ - 115 руб. </span>
             </div> 
@@ -42,13 +42,15 @@
                <p class="display-text">Выберите кофе</p>
                <!--берем с сайта bootstrap Прогрессбар в виде Анимированные полосы-->
                <div class="progress"> 
-                  <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
+                  <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div><!--по умолчанию с сайта bootstrap Прогрессбар имеет ширину "width: 75%", делаем 0%-->
                   
                </div>
              </div>
              <!--добавляем кружку-->
-             <div class="coffee-cup">
-               <img src="img/americano.png" alt="">
+             <div class="coffee-cup"> 
+               <!--еще один class="d-none" (бутстрапа) в 
+               <img src="img/americano.png" alt=""> вставили чтобы добавлять кружку или убирать. По умолчанию при d-none ее не видно-->
+               <img class="d-none" src="img/americano.png" alt="">
              </div>
            </div>
            <div class="col-6"> <!--здесь будет 3 элемента -->
