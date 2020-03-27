@@ -124,7 +124,68 @@ function takeCoffee() {
   changeDisplayText("Выберите кофе");
 } 
 
+//-----------------------------------Drag'n'Drop---------------------------
+
+let bills = document.querySelectorAll(".wallet img");
+
+for(let i = 0; i < bills.length; i++) {
+  bills[i].onmousedown = takeMoney;
+  //bills[i].onmousedown = () => {takeMoney()};
+}
+
+function takeMoney(event) {
+  //Отключаем встроенные функции. чтобы не тянулся "призрак" за купюрой
+  event.preventDefault();
   
+  let bill = this;
+  let billCost = bill.getAttribute("cost");
+  //console.log("Вы нажали на купюру")
+  console.log(billCost);
+  
+  
+  bill.style.position = "absolute";
+  //разворачиваем купюры на 90 градусов, чтобы внести в купюроприемник
+  bill.style.transform = "rotate(90deg)";
+  
+  //Ищем координаты наших купюр
+  let billCoords = bill.getBoundingClientRect();
+  //console.log(billCoords);
+  //нам потребуются ширина и высота купюры
+  let billWidth = billCoords.width;
+  let billHeight = billCoords.height;
+  console.log(billWidth, billHeight);
+  
+  console.log(event);
+  //Положение нашего курсора на экране clientX и clientY
+  console.log(event.clientX, event.clientY);
+  
+  //Изменим положение нашей купюры - при нажатии помещаем ее в центр курсора
+  /*
+  bill.style.top = event.clientY + "px";
+  bill.style.left = event.clientX + "px";
+  */
+  //Чтобы сделать купюру по центру курсора купюру надо сдвинуть на половину ее ширины и высоты
+  bill.style.top = event.clientY - billWidth/2 + "px";
+  bill.style.left = event.clientX  - billHeight/2 + "px";
+  
+  //Надо отловить событие движения купюры по экрану
+  //и отловить надо движение курсора по экрану, а не внутри купюры
+  //событие должно появляться внутри функции и должно видеть bill, поэтому расположим внутри функции
+  window.onmousemove = (event) => {
+    //console.log(event.clientX, event.clientY);
+    //каждый раз когда двигается -обновляются координаты
+    bill.style.top = event.clientY - billWidth/2 + "px";
+    bill.style.left = event.clientX  - billHeight/2 + "px";
+  };
+  
+  //Действие на отпускание купюры
+  bill.onmouseup = dropMoney;
+  
+}
+
+function dropMoney() {
+  window.onmousemove = null;
+}  
   
 
 
