@@ -6,9 +6,31 @@ let displayText = document.querySelector(".display-text");
 //создадим переменную статус, для отслживания состояния кофемашины
 //изначальное состояние-ожидание заказа. Еще состояния "cooking" и "ready"
 let coffeeStatus = "waiting";
+
+//Вешаем событие на нажатие на чашку
+//первый вариант: 
+/*при этом скобки послефункции takeCoffee не указываем, иначе она тут же вызовется, а у нас она должна вызываться по клику*/
+//coffeeCup.onclick = takeCoffee;
+//или первый вариант со скобками в таком виде
+/*coffeeCup.onclick = function() {
+  takeCoffee();
+}*/
+//второй вариант:
+//coffeeCup.addEventListener("click", takeCoffee, par1, par2);
+//или
+/*
+coffeeCup.addEventListener("click", () => {
+takeCoffee
+});
+*/
+
+//coffeeCup.onclick = takeCoffee; //первый вариант
+
 //Создаем глобальные переменные для заполнения прогрессбара и появления кружки в процессе приготовления кофе
 let progressBar = document.querySelector(".progress-bar");
 let coffeeCup = document.querySelector(".coffee-cup img");
+
+coffeeCup.onclick = takeCoffee; //первый вариант
 
 function buyCoffee(name, cost, elem) {
   //проверяем coffeeStatus чтобы во время приготовления нельзя было заказать новый кофе
@@ -86,9 +108,25 @@ function cookCoffee(name, elem) {
       clearInterval(cookingInterval);
     }
   }, 100);
-  
-  
 }
+
+//Функция "Забрать кофе"
+function takeCoffee() {
+  if (coffeeStatus != "ready") {
+    return;
+  }
+  //Возвращаем статус в "waiting"
+  coffeeStatus = "waiting";
+  //Убираем изображение чашки
+  coffeeCup.classList.add("d-none");
+  coffeeCup.style.cursor = "auto";
+  progressBar.style.width = "0%";
+  changeDisplayText("Выберите кофе");
+} 
+
+  
+  
+
 
 
 
