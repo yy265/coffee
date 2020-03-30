@@ -59,10 +59,14 @@
 }
 
 .change-box {
+  position: relative; /*чтобы монетки попадали в него на сдачу */
   background: gray;
   border: 3px solid black;
   height: 100px;
   margin-top: 15px;
 }
 
-
+.wallet img {
+  coursor: pointer; /* добавили свойство cursor, чтобы при наведении на кнопку появляся курсор-палец*/
+  width: 20%; /* От ширины div а он занимает всю ширину экрана */
+}

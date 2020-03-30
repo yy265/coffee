@@ -140,7 +140,7 @@ function takeMoney(event) {
   let bill = this;
   let billCost = bill.getAttribute("cost");
   //console.log("Вы нажали на купюру")
-  console.log(billCost);
+  //console.log(billCost);
   
   
   bill.style.position = "absolute";
@@ -153,11 +153,11 @@ function takeMoney(event) {
   //нам потребуются ширина и высота купюры
   let billWidth = billCoords.width;
   let billHeight = billCoords.height;
-  console.log(billWidth, billHeight);
+  //console.log(billWidth, billHeight);
   
-  console.log(event);
+  //console.log(event);
   //Положение нашего курсора на экране clientX и clientY
-  console.log(event.clientX, event.clientY);
+  //console.log(event.clientX, event.clientY);
   
   //Изменим положение нашей купюры - при нажатии помещаем ее в центр курсора
   /*
@@ -185,12 +185,139 @@ function takeMoney(event) {
 
 function dropMoney() {
   window.onmousemove = null;
+  //inAtm(this); //this вернет купюру, которую мы передаем в купюроприемник, т.к. dropMoney подвешена на: bill.onmouseup = dropMoney;
+  let bill = this;
+  let billCost = bill.getAttribute("cost");
+  //если купюра в купюроприемнике, то увеличиваем наш баланс
+  if (inAtm(this)) {
+    balance.value = +balance.value + +billCost
+    //и после увеличения баланса удаляем купюру с помощью .remove-метод,который совсем убирает объект со страницы, а d-none просто прячет-делает невидимым
+    bill.remove();
+  }
 }  
   
+function inAtm(bill) {
+  let billCoord = bill.getBoundingClientRect(); //координаты купюры
+  let atm = document.querySelector(".atm"); //ищем atm в глобальном document
+  let atmCoord = atm.getBoundingClientRect(); //координаты нашего atm (приемника купюр)
+  //ищем координаты левого верхнего края купюры
+  let billLeftTopCornerX = billCoord.x;
+  let billLeftTopCornerY = billCoord.y;
+  //ищем координаты правого верхнего края купюры
+  let billRightTopCornerX = billCoord.x + billCoord.width;
+  let billRightTopCornerY = billCoord.y;
+  
+  //ищем координаты левого верхнего края нашего atm
+  let atmLeftTopCornerX = atmCoord.x;
+  let atmLeftTopCornerY = atmCoord.y;
+  //ищем координаты правого верхнего края нашего atm
+  let atmRightTopCornerX = atmCoord.x + atmCoord.width;
+  let atmRightTopCornerY = atmCoord.y;
+  //ищем координаты левого нижнего края нашего atm (его верхней трети-куда вставляют купюру)
+  let atmLeftBottomCornerX = atmCoord.x;
+  let atmLeftBottomCornerY = atmCoord.y + atmCoord.height/3;
+  //ищем координаты правого нижнего края нашего atm (его верхней трети-куда вставляют купюру)
+  let atmRightBottomCornerX = atmCoord.x + atmCoord.width;
+  let atmRightBottomCornerY = atmCoord.y + atmCoord.height/3;
+  
+  
+  //console.log([billCoord, atmCoord]);
+  //console.log([billLeftTopCornerX, billLeftTopCornerY] , [billRightTopCornerX, billRightTopCornerY]);
+  /*
+  console.log(
+              [
+                [billLeftTopCornerX, billLeftTopCornerY] , [billRightTopCornerX, billRightTopCornerY]
+              ],
+              [
+                [atmLeftTopCornerX, atmLeftTopCornerY] , [atmRightTopCornerX, atmRightTopCornerY],
+                [atmLeftBottomCornerX, atmLeftBottomCornerY] , [atmRightBottomCornerX, atmRightBottomCornerY],
+              ]
+              );
+  */ 
+  //Проверяем координаты купюры на попадание в координаты верхней трети купюроприемника
+  if (
+    billLeftTopCornerX >= atmLeftTopCornerX
+    && billLeftTopCornerY >= atmLeftTopCornerY
+    && billRightTopCornerX <= atmRightTopCornerX
+    && billRightTopCornerY >= atmRightTopCornerY
+    //проверяем координаты снизу
+    && billLeftTopCornerX >= atmLeftBottomCornerX
+    && billLeftTopCornerY <= atmLeftBottomCornerY
+    ) {
+      //console.log(true);
+      return true;
+    } else {
+      //console.log(false);
+      return false;
+    }
 
+}
 
+/*---------------------------Сдача----------------*/
+//будет вываливать монетки в нижний квадрат
+let changeBtn = document.querySelector(".change");
+//повесим на переменную событие
+changeBtn.onclick = takeChange;
 
-
-
+function takeChange() {
+  //alert("Сдача!");
+  tossCoin("5");
+}
+ 
+function tossCoin(cost) {
+  let changeContainer = document.querySelector(".change-box");
+  let changeContainerCoords = changeContainer.getBoundingClientRect();
+  //alert(cost);
+  //console.log(changeContainerCoords);
+  //переменная с адресом к изображению монеты
+  let coinSrc = "";
+  
+  switch (cost) {
+    case "10":
+      coinSrc = "img/10rub.png";
+      break;
+    case "5":
+      coinSrc = "img/5rub.png";
+      break;
+    case "2":
+      coinSrc = "img/2rub.png";
+      break;
+    case "1":
+      coinSrc = "img/1rub.png";
+      break;
+  }
+  //console.log(coinSrc);
+  /*
+  // Воспользуемся способом с innerHTML с обратными кавычками, вписывая прямо в него (в changeBox)
+  changeContainer.innerHTML +=`
+    <img src="${coinSrc}" style="height: 50px">
+  `
+  */
+  //Второй способ, создавая код HTML с помощью js
+  let coin = document.createElement("img");
+  coin.setAttribute("src", coinSrc);
+  coin.style.height = "50px";
+  coin.style.coursor = "pointer";
+  coin.style.display = "inline-block"; //сделали строчно-блочным элементом, чтобы появились ширина-высота
+  coin.style.position = "absolute";
+  
+  changeContainer.append(coin); //Прикрепить после внутри элемента
+  /*
+  changeContainer.prepend(coin); //Прикрепить до внутри элемента
+  
+  changeContainer.after(coin); //После контейнера
+  changeContainer.before(coin); //Перед контейнером
+  
+  changeContainer.replace(coin); //Заменяем элементы
+  */
+  
+  // +3  и - 53: чтобы монеты не залезали на границы change-box
+  coin.style.top = 3 + Math.round(Math.random() * (changeContainerCoords.height - 53)) + "px";
+  coin.style.left = 3 + Math.round(Math.random() * (changeContainerCoords.width - 53)) + "px";
+  
+  // Будем удалять монетки, для этого надо повесить событие на монетку
+  coin.onclick = () => coin.remove();
+  
+}
 
 

@@ -67,7 +67,7 @@
              </div>
              <!--добавляем кнопку сдача, используя бутстрап btn-->
              <!--btn-block- делаем элемент блочным, чтобы занял всю -->
-             <button class="btn btn-primary btn-block mt-2">Сдача</button>
+             <button class="btn btn-primary btn-block mt-2 change">Сдача</button>
              <!--добавляем контейнер под сдачу -->
              <div class="change-box">
                
