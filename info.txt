@@ -1,0 +1,17 @@
+click => onclick - щелчок мыши
+mouseover => onmouseover - наведение мыши
+mousedown => onmousedown - зажали кнопку мыши
+mouseup => onmouseup - отпустили кнопку мыши
+
+Способы найти элементы на странице:
+
+1. по ID
+2.  document.getElementById("balance")
+    document.getElementsByClass("coffee-item")
+    document.getElementsByTag("img")
+
+3.  document.querySelector("img") 
+    document.querySelector(".coffee-item")
+    document.querySelector("#balance")
+
+    document.querySelectorAll(".coffee-item")

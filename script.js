@@ -190,7 +190,7 @@ function dropMoney() {
   let billCost = bill.getAttribute("cost");
   //если купюра в купюроприемнике, то увеличиваем наш баланс
   if (inAtm(this)) {
-    balance.value = +balance.value + +billCost
+    balance.value = +balance.value + +billCost;
     //и после увеличения баланса удаляем купюру с помощью .remove-метод,который совсем убирает объект со страницы, а d-none просто прячет-делает невидимым
     bill.remove();
   }
@@ -259,9 +259,78 @@ let changeBtn = document.querySelector(".change");
 //повесим на переменную событие
 changeBtn.onclick = takeChange;
 
+
+
 function takeChange() {
   //alert("Сдача!");
-  tossCoin("5");
+  //Напишем логику выдачи сдачи
+  //tossCoin("10");
+  //проверяем балансе, если денег нет, то и сдачи нет
+  
+  if (balance.value <= 0) {
+    changeBtn.onclick = takeChange; // возвращаем событие на место
+    //Вешаем звук на выпадение монеток-один раз, а не на каждую монету
+    
+    /* Перенсли это вниз- в конец function tossCoin
+    let coinSound = new Audio("sound/coindrop.mp3");
+    
+    // можно и так: 
+    //let coinSound = new Audio();
+    //coinSound.src = "sound/coindrop.mp3";
+    
+    coinSound.play();
+    */
+    return;
+  } 
+  changeBtn.onclick = null; /*снимаем событие, т.к. если нажать на сдачу, когда падают монетки, то каждое нажатие будет стоить автомату 10 руб и в сдаче будет на столько же монеток больше и получится баланс -70 например*/
+  
+  /* Первоначальный вариант - без задержки setTimeout
+  if (balance.value - 10 >= 0) {
+    tossCoin("10");
+    balance.value -= 10;
+    return takeChange(); //вызываем саму себя, чтобы выдать ысе монетки по 10руб.
+    // если return takeChange; -без скобок, товыдает по одной монете
+  } else if (balance.value - 5 >= 0) {
+    tossCoin("5");
+    balance.value -= 5;
+    return takeChange();
+  } else if (balance.value - 2 >= 0) {
+    tossCoin("2");
+    balance.value -= 2;
+    return takeChange();
+  } else if (balance.value - 1 >= 0) {
+    tossCoin("1");
+    balance.value -= 1;
+    return takeChange();
+  }
+  */
+  // Вводим задержку с помощью setTimeout в 300мс
+  if (balance.value - 10 >= 0) {
+    setTimeout(() => {
+      tossCoin("10");
+      balance.value -= 10;
+      return takeChange(); //вызываем саму себя, чтобы выдать ысе монетки по 10руб.
+    // если return takeChange; -без скобок, товыдает по одной монете
+    }, 300);
+  } else if (balance.value - 5 >= 0) {
+    setTimeout(() => {
+      tossCoin("5");
+      balance.value -= 5;
+      return takeChange();
+    }, 300);  
+  } else if (balance.value - 2 >= 0) {
+    setTimeout(() => {
+      tossCoin("2");
+      balance.value -= 2;
+      return takeChange();
+    }, 300);
+  } else if (balance.value - 1 >= 0) {
+    setTimeout(() => {
+      tossCoin("1");
+      balance.value -= 1;
+      return takeChange();
+    }, 300);  
+  }
 }
  
 function tossCoin(cost) {
@@ -300,6 +369,7 @@ function tossCoin(cost) {
   coin.style.coursor = "pointer";
   coin.style.display = "inline-block"; //сделали строчно-блочным элементом, чтобы появились ширина-высота
   coin.style.position = "absolute";
+  coin.style.userSelect = "none";
   
   changeContainer.append(coin); //Прикрепить после внутри элемента
   /*
@@ -317,6 +387,15 @@ function tossCoin(cost) {
   
   // Будем удалять монетки, для этого надо повесить событие на монетку
   coin.onclick = () => coin.remove();
+  
+  //перенесли вниз
+  let coinSound = new Audio("sound/coindrop.mp3");
+    // можно и так: 
+    /*
+    let coinSound = new Audio();
+    coinSound.src = "sound/coindrop.mp3";
+    */
+    coinSound.play();
   
 }
 
